@@ -1,45 +1,51 @@
 // src/App.jsx
 
 function App() {
-  // 1. Aapka dynamic data array (Jaise real-world apps mein database se aata hai)
+  // 1. Aapka dynamic data array
   const students = [
     { id: 1, name: "Pushpraj Pandey", role: "MERN Stack Champion", status: "Active" },
     { id: 2, name: "Aman Sharma", role: "Backend Developer", status: "Active" },
-    { id: 3, name: "Rohit Verma", role: "Frontend Designer", status: "Inactive" }
+    { id: 3, name: "Rohit Verma", role: "Frontend Designer", status: "Inactive" },
+    { id: 4, name: "Anurag pandey", role: "Developer", status: "Active" }
   ];
 
   return (
     <div style={{ fontFamily: "sans-serif", padding: "40px", backgroundColor: "#0f172a", minHeight: "100vh", color: "#fff" }}>
-      <h1 style={{ textAlign: "center", color: "#38bdf8", marginBottom: "30px" }}>
-        React Dynamic Cards (.map Practice) 🚀
+      <h1 style={{ textAlign: "center", color: "#38bdf8", marginBottom: "5px" }}>
+        React Dynamic Cards 🚀
       </h1>
+      <p style={{ textAlign: "center", color: "#94a3b8", marginBottom: "30px" }}>
+        Showing only 'Active' Students using .filter()
+      </p>
 
       {/* Cards container */}
       <div style={{ display: "flex", gap: "20px", justifyContent: "center", flexWrap: "wrap" }}>
         
-        {/* Magic Step: Loop over data using .map() */}
-        {students.map((student) => (
-          <div key={student.id} style={{
-            background: "#1e293b",
-            padding: "20px",
-            borderRadius: "12px",
-            width: "250px",
-            border: "1px solid #334155",
-            boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)"
-          }}>
-            <h2 style={{ color: "#f8fafc", margin: "0 0 10px 0" }}>{student.name}</h2>
-            <p style={{ color: "#94a3b8", fontSize: "14px", margin: "0 0 15px 0" }}>Role: {student.role}</p>
-            <span style={{
-              background: student.status === "Active" ? "#10b981" : "#ef4444",
-              padding: "4px 8px",
-              borderRadius: "4px",
-              fontSize: "12px",
-              fontWeight: "bold"
+        {/* Magic Step: Pehle filter kiya fir map chalaya */}
+        {students
+          .filter((student) => student.status === "Active")
+          .map((student) => (
+            <div key={student.id} style={{
+              background: "#1e293b",
+              padding: "20px",
+              borderRadius: "12px",
+              width: "250px",
+              border: "1px solid #334155",
+              boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)"
             }}>
-              {student.status}
-            </span>
-          </div>
-        ))}
+              <h2 style={{ color: "#f8fafc", margin: "0 0 10px 0" }}>{student.name}</h2>
+              <p style={{ color: "#94a3b8", fontSize: "14px", margin: "0 0 15px 0" }}>Role: {student.role}</p>
+              <span style={{
+                background: "#10b981",
+                padding: "4px 8px",
+                borderRadius: "4px",
+                fontSize: "12px",
+                fontWeight: "bold"
+              }}>
+                {student.status}
+              </span>
+            </div>
+          ))}
 
       </div>
     </div>
