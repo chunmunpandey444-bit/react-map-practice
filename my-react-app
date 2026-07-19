@@ -1,4 +1,5 @@
 // src/App.jsx
+import { useState } from "react";
 
 function App() {
   // 1. Aapka dynamic data array
@@ -6,42 +7,63 @@ function App() {
     { id: 1, name: "Pushpraj Pandey", role: "MERN Stack Champion", status: "Active" },
     { id: 2, name: "Aman Sharma", role: "Backend Developer", status: "Active" },
     { id: 3, name: "Rohit Verma", role: "Frontend Designer", status: "Inactive" },
-    { id: 4, name: "Anurag pandey", role: "Developer", status: "Active" }
+    { id: 4, name: "Anurag pandey", role: "Developer", status: "Active" },
+    { id: 5, name: "pandey", role: "Developer", status: "Active" }
   ];
 
+  // 2. React Hook to manage dynamic button filtering
+  const [filterType, setFilterType] = useState("All");
+
   return (
-    <div style={{ fontFamily: "sans-serif", padding: "40px", backgroundColor: "#0f172a", minHeight: "100vh", color: "#fff" }}>
-      <h1 style={{ textAlign: "center", color: "#38bdf8", marginBottom: "5px" }}>
-        React Dynamic Cards 🚀
+    <div className="bg-slate-900 min-h-screen text-white p-10 font-sans">
+      
+      {/* Header Section */}
+      <h1 className="text-center text-4xl font-extrabold text-sky-400 mb-2 tracking-wide drop-shadow">
+        React Dynamic Cards created by Pushpraj pandey 🚀
       </h1>
-      <p style={{ textAlign: "center", color: "#94a3b8", marginBottom: "30px" }}>
-        Showing only 'Active' Students using .filter()
+      <p className="text-center text-slate-400 mb-8 text-lg">
+        Active Filter: <span className="text-sky-400 font-bold underline decoration-2">{filterType}</span>
       </p>
 
-      {/* Cards container */}
-      <div style={{ display: "flex", gap: "20px", justifyContent: "center", flexWrap: "wrap" }}>
+      {/* 🌟 Tailwind Styled Buttons Container */}
+      <div className="flex gap-4 justify-center mb-10">
+        <button 
+          onClick={() => setFilterType("All")} 
+          className={`px-5 py-2.5 rounded-lg font-bold transition-all duration-300 ${filterType === "All" ? "bg-sky-500 text-white shadow-lg shadow-sky-500/30 scale-105" : "bg-slate-800 text-slate-300 hover:bg-slate-700"}`}>
+          Show All
+        </button>
+        <button 
+          onClick={() => setFilterType("Active")} 
+          className={`px-5 py-2.5 rounded-lg font-bold transition-all duration-300 ${filterType === "Active" ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 scale-105" : "bg-slate-800 text-slate-300 hover:bg-slate-700"}`}>
+          Active Only
+        </button>
+        <button 
+          onClick={() => setFilterType("Inactive")} 
+          className={`px-5 py-2.5 rounded-lg font-bold transition-all duration-300 ${filterType === "Inactive" ? "bg-rose-500 text-white shadow-lg shadow-rose-500/30 scale-105" : "bg-slate-800 text-slate-300 hover:bg-slate-700"}`}>
+          Inactive Only
+        </button>
+      </div>
+
+      {/* Cards Container Grid */}
+      <div className="flex gap-6 justify-center flex-wrap max-w-6xl mx-auto">
         
-        {/* Magic Step: Pehle filter kiya fir map chalaya */}
+        {/* Magic Block: Filter -> Map chain */}
         {students
-          .filter((student) => student.status === "Active")
+          .filter((student) => {
+            if (filterType === "All") return true;
+            return student.status === filterType;
+          })
           .map((student) => (
-            <div key={student.id} style={{
-              background: "#1e293b",
-              padding: "20px",
-              borderRadius: "12px",
-              width: "250px",
-              border: "1px solid #334155",
-              boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)"
-            }}>
-              <h2 style={{ color: "#f8fafc", margin: "0 0 10px 0" }}>{student.name}</h2>
-              <p style={{ color: "#94a3b8", fontSize: "14px", margin: "0 0 15px 0" }}>Role: {student.role}</p>
-              <span style={{
-                background: "#10b981",
-                padding: "4px 8px",
-                borderRadius: "4px",
-                fontSize: "12px",
-                fontWeight: "bold"
-              }}>
+            <div key={student.id} className="bg-slate-800/80 backdrop-blur-md p-6 rounded-2xl w-64 border border-slate-700/50 shadow-xl hover:border-sky-500/40 hover:-translate-y-1 transition-all duration-300 group">
+              <h2 className="text-xl font-bold text-slate-100 mb-1 group-hover:text-sky-400 transition-colors">
+                {student.name}
+              </h2>
+              <p className="text-slate-400 text-sm mb-4">
+                Role: <span className="text-slate-300 font-medium">{student.role}</span>
+              </p>
+              
+              {/* Dynamic status badge base on Tailwind conditioning */}
+              <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${student.status === "Active" ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" : "bg-rose-500/20 text-rose-400 border border-rose-500/30"}`}>
                 {student.status}
               </span>
             </div>
